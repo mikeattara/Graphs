@@ -72,7 +72,7 @@ class Graph:
                 for next_vertex in self.vertices[v]:
                     s.push(next_vertex)
 
-    def dft_recursive_h(self, v, visited, stack):
+    def dft_recursive_helper(self, v, visited, stack):
         if stack.size() > 0:
             v = stack.pop()
             if v not in visited:
@@ -80,7 +80,7 @@ class Graph:
                 print(v)
                 for next_vertex in self.vertices[v]:
                     stack.push(next_vertex)
-            self.dft_recursive_h(v, visited, stack)
+            self.dft_recursive_helper(v, visited, stack)
         else:
             return False
 
@@ -92,8 +92,7 @@ class Graph:
         """
         s = Stack()
         s.push(starting_vertex)
-        visited = set()
-        self.dft_recursive_h(starting_vertex, visited, s)
+        self.dft_recursive_helper(starting_vertex, visited, s)
         return visited
 
     def bfs(self, starting_vertex, destination_vertex):
@@ -190,10 +189,10 @@ class Graph:
             return path
         neighbors = self.get_neighbors(starting_vertex)
         for neighbor in neighbors - set(path):
-            findPath = self.dfs_recursive(
+            find_path = self.dfs_recursive(
                 neighbor, destination_vertex, path + [neighbor])
-            if findPath is not None:
-                return findPath
+            if find_path is not None:
+                return find_path
 
 
 if __name__ == '__main__':
