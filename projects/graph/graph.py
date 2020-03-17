@@ -90,9 +90,9 @@ class Graph:
         beginning from starting_vertex.
         This should be done using recursion.
         """
-        s = Stack()
-        s.push(starting_vertex)
-        self.dft_recursive_helper(starting_vertex, visited, s)
+        stack = Stack()
+        stack.push(starting_vertex)
+        self.dft_recursive_helper(starting_vertex, visited, stack)
         return visited
 
     def bfs(self, starting_vertex, destination_vertex):
