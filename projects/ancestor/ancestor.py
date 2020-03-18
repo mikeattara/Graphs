@@ -12,10 +12,10 @@ def earliest_ancestor(ancestors, starting_node):
 
 def dfs(graph, starting_node, ancestors):
     visited = set()
-    arr = []
-    arr.append([starting_node])
-    while len(arr) > 0:
-        path = arr.pop()
+    paths = []
+    paths.append([starting_node])
+    while len(paths) > 0:
+        path = paths.pop()
         nodes = set(path) - visited
         for vertex in nodes:
             parents = [parent for (parent, child)
@@ -24,5 +24,5 @@ def dfs(graph, starting_node, ancestors):
                 return -1 if path[-1] == starting_node else path[-1]
             new_path = list(path)
             new_path.append(min(parents))
-            arr.append(new_path)
+            paths.append(new_path)
             visited.add(vertex)
