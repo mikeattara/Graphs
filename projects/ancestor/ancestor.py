@@ -2,7 +2,12 @@ from collections import defaultdict
 
 
 def earliest_ancestor(ancestors, starting_node):
-    pass
+    graph = defaultdict(set)
+    for (parent, child) in ancestors:
+        if not graph[parent]:
+            graph[parent] = set()
+        graph[parent].add(child)
+    return dfs(graph, starting_node, ancestors)
 
 
 def dfs(graph, starting_node, ancestors):
