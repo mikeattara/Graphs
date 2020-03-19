@@ -30,9 +30,7 @@ player = Player(world.starting_room)
 reverse_directions = {'n': 's', 's': 'n', 'e': 'w', 'w': 'e'}
 
 
-def traverse(room, visited=None):
-    if visited is None:
-        visited = set()
+def traverse(room, visited=set()):
     traversed_path = []
 
     # add starting room to visited set
