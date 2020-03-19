@@ -5,6 +5,42 @@ from world import World
 import random
 from ast import literal_eval
 
+# traverse function
+
+
+def traverse(room, visited=set()):
+    traversed_path = []
+
+    # add starting room to visited set
+    visited.add(room.id)
+
+    # for each direction provided in room exits method
+    for direction in room.get_exits():
+        # move to that room and store in next_room
+        next_room = room.get_room_in_direction(direction)
+
+        # need reverse directions because they are opposite based on what appears on map visual
+        reversed_directions = {'n': 's', 's': 'n', 'e': 'w', 'w': 'e'}
+
+        # if that room has not already been visited...
+        if next_room.id not in visited:
+            # recurse on that room
+            next_room_path = traverse(next_room, visited)
+
+            # after recursing, if valid direction path, store path
+            if next_room_path:
+                path = [direction] + next_room_path + \
+                    [reversed_directions[direction]]
+            # not valid path so reverse direction and store that path
+            else:
+                path = [direction, reversed_directions[direction]]
+            # add path taken to traversed array
+            traversed_path = traversed_path + path
+
+    # return complete path to traversing the maze
+    return traversed_path
+
+
 # Load world
 world = World()
 
@@ -26,40 +62,6 @@ world.print_rooms()
 player = Player(world.starting_room)
 
 # Fill this out with directions to walk
-# need reverse directions because they are opposite based on what appears on map visual
-reverse_directions = {'n': 's', 's': 'n', 'e': 'w', 'w': 'e'}
-
-
-def traverse(room, visited=set()):
-    traversed_path = []
-
-    # add starting room to visited set
-    visited.add(room.id)
-
-    # for each direction provided in room exits method
-    for direction in room.get_exits():
-        # move to that room and store in next_room
-        next_room = room.get_room_in_direction(direction)
-
-        # if that room has not already been visited...
-        if next_room.id not in visited:
-            # recurse on that room
-            next_room_path = traverse(next_room, visited)
-
-            # after recursing, if valid direction path, store path
-            if next_room_path:
-                path = [direction] + next_room_path + \
-                    [reverse_directions[direction]]
-            # not valid path so reverse direction and store that path
-            else:
-                path = [direction, reverse_directions[direction]]
-            # add path taken to traversed array
-            traversed_path = traversed_path + path
-
-    # return complete path to traversing the maze
-    return traversed_path
-
-
 traversal_path = traverse(player.current_room)
 
 
