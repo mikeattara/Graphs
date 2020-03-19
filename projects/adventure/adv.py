@@ -5,8 +5,6 @@ from world import World
 import random
 from ast import literal_eval
 
-# traverse function
-
 
 def traverse(room, visited=set()):
     traversed_path = []
